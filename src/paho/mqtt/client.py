@@ -4637,7 +4637,12 @@ class Client:
         if proxy:
             return socks.create_connection(addr, timeout=self._connect_timeout, source_address=source, **proxy)
         else:
-            return socket.create_connection(addr, timeout=self._connect_timeout, source_address=source)
+            print("Starting socket connection")
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            MSS_VALUE = 1360  # For example, setting MSS to 1460 bytes
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_MAXSEG, MSS_VALUE)
+            return sock.connect(addr)
+            # return socket.create_connection(addr, timeout=self._connect_timeout, source_address=source)
 
     def _ssl_wrap_socket(self, tcp_sock: _socket.socket) -> ssl.SSLSocket:
         if self._ssl_context is None:
