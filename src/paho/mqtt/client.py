@@ -4641,15 +4641,11 @@ class Client:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             MSS_VALUE = 1360  # For example, setting MSS to 1460 bytes
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_MAXSEG, MSS_VALUE)
-            print("Checkpoint 1")
             try:
-                print("Checkpoint 2")
                 sock.connect(addr)
             except Exception as e:
-                print("Checkpoint 3")
                 print(f"An error occurred: {e}")
                 return None
-            print("Checkpoint 4")
             return sock
             # return socket.create_connection(addr, timeout=self._connect_timeout, source_address=source)
 
